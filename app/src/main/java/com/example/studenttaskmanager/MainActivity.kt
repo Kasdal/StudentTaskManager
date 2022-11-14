@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewTaskModel: ViewTaskModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_StudentTaskManager);
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
