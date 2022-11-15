@@ -24,7 +24,7 @@ class TaskItemModel(
     private fun completedDate(): LocalDate? = if (completedDateString == null) null else LocalDate.parse(completedDateString, dateFormatter)
     fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)
 
-    fun isCompleted() = completedDate != null
+    fun isCompleted() = completedDate() != null
     fun imageResource(): Int = if(isCompleted()) R.drawable.ic_baseline_check_circle_outline_24 else R.drawable.ic_baseline_radio_button_unchecked_24
     fun imageColor(context: Context): Int = if(isCompleted()) purple(context) else black(context)
 
