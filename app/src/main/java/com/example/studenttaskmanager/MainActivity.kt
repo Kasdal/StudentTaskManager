@@ -3,29 +3,44 @@ package com.example.studenttaskmanager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studenttaskmanager.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), TaskItemListener
+{
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewTaskModel: ViewTaskModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_StudentTaskManager);
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewTaskModel = ViewModelProvider (this).get(ViewTaskModel::class.java)
-        //When the user clicks this will open the add task activity
+        viewTaskModel = ViewModelProvider(this).get(ViewTaskModel::class.java)
         binding.newTaskButton.setOnClickListener {
-            NewTask().show(supportFragmentManager, "NewTaskDialogFragment")
+            NewTask(null).show(supportFragmentManager, "newTaskTag")
         }
-        viewTaskModel.name.observe(this) {
-            binding.taskName.text = String.format("Task Name: %s", it)
-        }
+        setRecyclerView()
+    }
 
-        viewTaskModel.description.observe(this) {
-            binding.taskDesc.text = String.format("Task Description: %s", it)
+    private fun setRecyclerView()
+    {
+        val mainActivity = this
+        viewTaskModel.taskItems.observe(this){
+            binding.taskListRecyclerView.apply {
+                layoutManager = LinearLayoutManager(applicationContext)
+                adapter = TaskItemAdapter(it, mainActivity)
+            }
         }
+    }
+
+    override fun editTaskItem(taskItem: TaskItemModel)
+    {
+        NewTask(taskItem).show(supportFragmentManager,"newTaskTag")
+    }
+
+    override fun completeTaskItem(taskItem: TaskItemModel)
+    {
+        viewTaskModel.setCompleted(taskItem)
     }
 }
