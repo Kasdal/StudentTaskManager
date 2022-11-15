@@ -21,4 +21,5 @@ class TaskItemAdapter(
     }
 
     override fun getItemCount(): Int = taskItems.size
+
 }

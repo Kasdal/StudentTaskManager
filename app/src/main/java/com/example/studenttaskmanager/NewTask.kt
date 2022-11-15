@@ -1,5 +1,6 @@
 package com.example.studenttaskmanager
 
+import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.Editable
@@ -18,6 +19,7 @@ class NewTask(var taskItem: TaskItemModel?) : BottomSheetDialogFragment()
     private lateinit var binding: FragmentNewTaskBinding
     private lateinit var viewTaskModel: ViewTaskModel
     private var dueTime: LocalTime? = null
+    private lateinit var builder : AlertDialog.Builder
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +65,18 @@ class NewTask(var taskItem: TaskItemModel?) : BottomSheetDialogFragment()
 
     private fun updateTimeButtonText() {
         binding.timePickerButton.text = String.format("%02d:%02d",dueTime!!.hour,dueTime!!.minute)
+        //add alert dialog to confirm time
+        builder = AlertDialog.Builder(activity)
+        builder.setTitle("Confirm Time")
+        builder.setMessage("Are you sure you want to set the time to ${dueTime!!.hour}:${dueTime!!.minute}?")
+        builder.setPositiveButton("Yes"){dialog, which ->
+            //do nothing
+        }
+        builder.setNegativeButton("No"){dialog, which ->
+            //do nothing
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -87,6 +101,19 @@ class NewTask(var taskItem: TaskItemModel?) : BottomSheetDialogFragment()
         binding.name.setText("")
         binding.desc.setText("")
         dismiss()
-    }
 
+        //add alert dialog to confirm save
+        builder = AlertDialog.Builder(activity)
+        builder.setTitle("Confirm Save")
+        builder.setMessage("Are you sure you want to save this task?")
+        builder.setPositiveButton("Yes"){dialog, which ->
+            //do nothing
+        }
+        builder.setNegativeButton("No"){dialog, which ->
+            //do nothing
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
+    }
 }

@@ -21,6 +21,7 @@ class ViewTaskModel : ViewModel()
         taskItems.postValue(list)
     }
 
+
     fun updateTaskItem(id: UUID, name: String, desc: String, dueTime: LocalTime?)
     {
         val list = taskItems.value
@@ -46,5 +47,6 @@ class ViewTaskModel : ViewModel()
         //update the list of tasks with the new task values and post the new list of tasks
         taskItems.postValue(list)
     }
+
 
 }
