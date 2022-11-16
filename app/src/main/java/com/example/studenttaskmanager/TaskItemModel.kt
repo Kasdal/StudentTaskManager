@@ -25,13 +25,15 @@ class TaskItemModel(
     fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)
 
     fun isCompleted() = completedDate() != null
+    // if the task is completed, return the checked image, otherwise return the unchecked image
     fun imageResource(): Int = if(isCompleted()) R.drawable.ic_baseline_check_circle_outline_24 else R.drawable.ic_baseline_radio_button_unchecked_24
+    // if the task is completed, return the purple color, otherwise return the black color
     fun imageColor(context: Context): Int = if(isCompleted()) purple(context) else black(context)
-
     private fun purple(context: Context) = ContextCompat.getColor(context, R.color.purple_500)
     private fun black(context: Context) = ContextCompat.getColor(context, R.color.black)
 
     companion object {
+        // we use the ISO time format to store the time as per instructions in the tutorial from stackoverflow
         val timeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_TIME
         val dateFormatter: DateTimeFormatter = DateTimeFormatter.ISO_DATE
     }
