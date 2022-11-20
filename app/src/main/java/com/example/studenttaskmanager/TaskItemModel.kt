@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-
+//Create a data class to hold the data for each task element. This class will be used to create the database table.
 @Entity(tableName = "task_item_table")
 class TaskItemModel(
     @ColumnInfo(name = "name") var name: String,

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Paint
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studenttaskmanager.databinding.TaskItemCellBinding
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class TaskItemViewHolder(
@@ -17,6 +18,7 @@ class TaskItemViewHolder(
     fun bindTaskItem(taskItem: TaskItemModel)
     {
         binding.name.text = taskItem.name
+
 
         if (taskItem.isCompleted()){
             binding.name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
@@ -32,10 +34,39 @@ class TaskItemViewHolder(
         binding.taskCellContainer.setOnClickListener{
             clickListener.editTaskItem(taskItem)
         }
+        //If a task is completed, change the taskCellContainer background to a light green color
+        if (taskItem.isCompleted()){
+            binding.taskCellContainer.setBackgroundColor(context.getColor(R.color.light_green))
+        }
+        else{
+            binding.taskCellContainer.setBackgroundColor(context.getColor(R.color.white))
+        }
+
+        //If the task has a due time, display it, otherwise hide the dueTime TextView
+        if (taskItem.dueTime() != null){
+            binding.dueTime.text = taskItem.dueTime()!!.format(timeFormat)
+            binding.dueTime.visibility = android.view.View.VISIBLE
+        }
+        else{
+            binding.dueTime.visibility = android.view.View.GONE
+        }
+
+        //If the task has been completed hide the dueTime TextView
+        if (taskItem.isCompleted()){
+            binding.dueTime.visibility = android.view.View.GONE
+        }
 
         if(taskItem.dueTime() != null)
             binding.dueTime.text = timeFormat.format(taskItem.dueTime())
         else
             binding.dueTime.text = ""
+
+        //If the task due is greater 1 minute, shake the taskCellContainer
+        if (taskItem.dueTime() != null && taskItem.dueTime()!!.isAfter(LocalTime.now().plusMinutes(1))){
+            binding.taskCellContainer.startAnimation(android.view.animation.AnimationUtils.loadAnimation(context, R.anim.shake))
+        }
+        else{
+            binding.taskCellContainer.clearAnimation()
+        }
     }
 }
