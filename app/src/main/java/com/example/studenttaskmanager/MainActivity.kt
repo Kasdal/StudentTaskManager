@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +14,9 @@ import com.example.studenttaskmanager.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), TaskItemListener
 {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewTaskModel: ViewTaskModel
+    private val viewTaskModel: ViewTaskModel by viewModels {
+        TaskItemModelFactory((application as TaskApplication).repository)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -24,7 +27,7 @@ class MainActivity : AppCompatActivity(), TaskItemListener
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewTaskModel = ViewModelProvider(this).get(ViewTaskModel::class.java)
+       // viewTaskModel = ViewModelProvider(this).get(ViewTaskModel::class.java)
         binding.newTaskButton.setOnClickListener {
             NewTask(null).show(supportFragmentManager, "newTaskTag")
         }

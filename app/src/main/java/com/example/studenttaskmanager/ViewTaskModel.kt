@@ -1,58 +1,37 @@
 package com.example.studenttaskmanager
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 
-class ViewTaskModel : ViewModel()
+class ViewTaskModel( private val repository: TaskRepo ): ViewModel()
 {
-    var taskItems = MutableLiveData<MutableList<TaskItemModel>>()
-//initialise the list of tasks
-    init {
-        taskItems.value = mutableListOf()
+    val taskItems: LiveData<List<TaskItemModel>> = repository.allTaskItems.asLiveData()
+
+    fun addTaskItem(taskItem: TaskItemModel) = viewModelScope.launch {
+        repository.insertTaskItem(taskItem)
     }
 
-    fun addTaskItem(newTask: TaskItemModel)
+    fun updateTaskItem(taskItem: TaskItemModel) = viewModelScope.launch {
+        repository.updateTaskItem(taskItem)
+    }
+
+    fun setCompleted(taskItem: TaskItemModel) = viewModelScope.launch {
+        if (!taskItem.isCompleted())
+            taskItem.completedDateString = TaskItemModel.dateFormatter.format(LocalDate.now())
+        repository.updateTaskItem(taskItem)
+    }
+}
+
+class TaskItemModelFactory(private val repository: TaskRepo) : ViewModelProvider.Factory
+{
+    override fun <T : ViewModel> create(modelClass: Class<T>): T
     {
-        val list = taskItems.value
-        list!!.add(newTask)
-        taskItems.postValue(list)
+        if (modelClass.isAssignableFrom(ViewTaskModel::class.java))
+            return ViewTaskModel(repository) as T
+
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
-
-    //TODO broken - fix this function later
-
-//    fun updateTaskItem(id: UUID, name: String, desc: String, dueTime: LocalTime?)
-//    {
-//        val list = taskItems.value
-//        //find the task with the given id
-//        val task = list!!.find { it.id == id }!!
-//        //update the task with the new values passed in the parameters of the function call
-//        task.name = name
-//        task.desc = desc
-//        task.dueTime = dueTime
-//        //update the list of tasks with the new task values and post the new list of tasks
-//        taskItems.postValue(list)
-//    }
-//
-//    fun setCompleted(taskItem: TaskItemModel)
-//    {
-//        //get the list of tasks from the live data object taskItems and store it in a variable
-//        val list = taskItems.value
-//        //find the task with the given id
-//        val task = list!!.find { it.id == taskItem.id }!!
-//        //if the task is not completed, set the completed date to the current date
-//        if (task.completedDate == null)
-//            task.completedDate = LocalDate.now()
-//        //update the list of tasks with the new task values and post the new list of tasks
-//        taskItems.postValue(list)
-//    }
-
-    fun updateTaskItem(id: TaskItemModel) {
-        //TODO: implement this function
-
-    }
-
-
 }

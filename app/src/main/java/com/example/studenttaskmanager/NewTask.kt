@@ -98,6 +98,9 @@ class NewTask(var taskItem: TaskItemModel?) : BottomSheetDialogFragment()
         }
         else
         {
+            taskItem!!.name = name
+            taskItem!!.desc = desc
+            taskItem!!.dueTimeString = dueTimeString
             viewTaskModel.updateTaskItem(taskItem!!)
         }
         binding.name.setText("")
