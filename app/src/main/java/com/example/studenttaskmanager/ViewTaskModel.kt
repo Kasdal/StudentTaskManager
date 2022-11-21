@@ -23,6 +23,13 @@ class ViewTaskModel( private val repository: TaskRepo ): ViewModel()
             taskItem.completedDateString = TaskItemModel.dateFormatter.format(LocalDate.now())
         repository.updateTaskItem(taskItem)
     }
+
+    fun deleteTaskItem(taskItem: TaskItemModel) {
+        viewModelScope.launch {
+            repository.deleteTaskItem(taskItem)
+        }
+
+    }
 }
 
 class TaskItemModelFactory(private val repository: TaskRepo) : ViewModelProvider.Factory

@@ -121,4 +121,14 @@ class NewTask(var taskItem: TaskItemModel?) : BottomSheetDialogFragment()
         dialog.show()
 
     }
+
+    //Delete task
+    private fun deleteAction()
+    {
+        if(taskItem != null)
+        {
+            viewTaskModel.deleteTaskItem(taskItem!!)
+        }
+        dismiss()
+    }
 }

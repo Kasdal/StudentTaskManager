@@ -62,7 +62,7 @@ class TaskItemViewHolder(
             binding.dueTime.text = ""
 
         //If the task due is greater 1 minute, shake the taskCellContainer
-        if (taskItem.dueTime() != null && taskItem.dueTime()!!.isAfter(LocalTime.now().plusMinutes(1))){
+        if (taskItem.dueTime() != null && taskItem.dueTime()!!.isAfter(LocalTime.now().plusMinutes(10))){
             binding.taskCellContainer.startAnimation(android.view.animation.AnimationUtils.loadAnimation(context, R.anim.shake))
         }
         else{

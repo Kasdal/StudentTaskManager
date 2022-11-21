@@ -31,7 +31,7 @@ class TaskItemModel(
     fun imageColor(context: Context): Int = if(isCompleted()) purple(context) else black(context)
     private fun purple(context: Context) = ContextCompat.getColor(context, R.color.purple_500)
     private fun black(context: Context) = ContextCompat.getColor(context, R.color.black)
-
+    // if the task is completed, return the completed date, otherwise return the due date
     companion object {
         // we use the ISO time format to store the time as per instructions in the tutorial from stackoverflow
         val timeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_TIME
