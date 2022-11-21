@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studenttaskmanager.databinding.ActivityMainBinding
 
@@ -32,6 +33,16 @@ class MainActivity : AppCompatActivity(), TaskItemListener
             NewTask(null).show(supportFragmentManager, "newTaskTag")
         }
         setRecyclerView()
+        val swipeGesture = object : SwipeGesture() {
+            override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, direction: Int)
+            {
+                val taskItem = viewTaskModel.taskItems.value?.get(viewHolder.adapterPosition)
+                if (taskItem != null)
+                    viewTaskModel.deleteTaskItem(taskItem)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeGesture)
+        itemTouchHelper.attachToRecyclerView(binding.taskListRecyclerView)
     }
 
     private fun setRecyclerView()

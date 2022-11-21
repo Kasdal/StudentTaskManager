@@ -28,7 +28,6 @@ class ViewTaskModel( private val repository: TaskRepo ): ViewModel()
         viewModelScope.launch {
             repository.deleteTaskItem(taskItem)
         }
-
     }
 }
 
