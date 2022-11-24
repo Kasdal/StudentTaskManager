@@ -17,6 +17,8 @@ class TaskItemViewHolder(
 
     fun bindTaskItem(taskItem: TaskItemModel)
     {
+
+
         binding.name.text = taskItem.name
 
 
@@ -54,11 +56,16 @@ class TaskItemViewHolder(
             binding.dueTime.visibility = android.view.View.GONE
         }
 
+        //If the task has a description, display it, otherwise hide the description TextView
+        //TODO: Make the description TextView expandable so that the user can see the full description
+
         //If the task has been completed hide the dueTime TextView
         if (taskItem.isCompleted()){
             binding.dueTime.visibility = android.view.View.GONE
         }
-
+        else{
+            binding.dueTime.visibility = android.view.View.VISIBLE
+        }
         if(taskItem.dueTime() != null)
             binding.dueTime.text = timeFormat.format(taskItem.dueTime())
         else

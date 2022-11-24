@@ -2,7 +2,6 @@ package com.example.studenttaskmanager
 
 import androidx.annotation.WorkerThread
 import androidx.room.Dao
-import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao

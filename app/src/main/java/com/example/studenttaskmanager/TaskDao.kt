@@ -17,7 +17,4 @@ interface TaskDao {
         //Delete a task item from the task table
         @Delete
         suspend fun deleteTaskItem(taskItem: TaskItemModel)
-
-
-
 }

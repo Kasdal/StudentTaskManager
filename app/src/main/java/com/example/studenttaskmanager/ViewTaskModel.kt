@@ -3,8 +3,6 @@ package com.example.studenttaskmanager
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalTime
-import java.util.*
 
 class ViewTaskModel( private val repository: TaskRepo ): ViewModel()
 {
@@ -28,6 +26,15 @@ class ViewTaskModel( private val repository: TaskRepo ): ViewModel()
         viewModelScope.launch {
             repository.deleteTaskItem(taskItem)
         }
+    }
+
+    fun sortByDueTime() {
+        taskItems.value?.sortedBy { it.dueTime() }
+
+    }
+
+    fun sortByName() {
+        taskItems.value?.sortedBy { it.name }
     }
 }
 

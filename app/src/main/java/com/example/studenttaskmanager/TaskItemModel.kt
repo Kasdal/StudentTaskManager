@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 //Create a data class to hold the data for each task element. This class will be used to create the database table.
 @Entity(tableName = "task_item_table")
 class TaskItemModel(
@@ -25,6 +24,7 @@ class TaskItemModel(
     fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)
 
     fun isCompleted() = completedDate() != null
+
     // if the task is completed, return the checked image, otherwise return the unchecked image
     fun imageResource(): Int = if(isCompleted()) R.drawable.ic_baseline_check_circle_outline_24 else R.drawable.ic_baseline_radio_button_unchecked_24
     // if the task is completed, return the purple color, otherwise return the black color

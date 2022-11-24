@@ -3,6 +3,7 @@ package com.example.studenttaskmanager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -65,12 +66,18 @@ class MainActivity : AppCompatActivity(), TaskItemListener
         return true
     }
 
-    fun onGroupItemClick(item: MenuItem) {
-
-        // One of the group items (using the onClick attribute) was clicked
-        // The item parameter passed here indicates which item it is
-        // All other menu item clicks are handled by <code><a href="/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected()</a></code>
-        TODO() //Implement menu functionality for sorting tasks
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.sortByName -> {
+                viewTaskModel.sortByName()
+                Toast.makeText(this, "Sorted by Name", Toast.LENGTH_SHORT).show()
+        }
+            R.id.sortByDueTime -> {
+                viewTaskModel.sortByDueTime()
+                Toast.makeText(this, "Sorted by Date", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun editTaskItem(taskItem: TaskItemModel)
