@@ -1,16 +1,15 @@
 package com.example.studenttaskmanager
 
-import android.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studenttaskmanager.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity(), TaskItemListener
 {
@@ -39,6 +38,12 @@ class MainActivity : AppCompatActivity(), TaskItemListener
                 val taskItem = viewTaskModel.taskItems.value?.get(viewHolder.adapterPosition)
                 if (taskItem != null)
                     viewTaskModel.deleteTaskItem(taskItem)
+                Snackbar.make(binding.root, "Task Deleted", Snackbar.LENGTH_LONG).apply {
+                    setAction("Undo") {
+                        viewTaskModel.addTaskItem(taskItem!!)
+                    }
+                    show()
+                }
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeGesture)
