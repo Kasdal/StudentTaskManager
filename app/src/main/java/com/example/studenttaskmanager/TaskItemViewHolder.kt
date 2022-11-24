@@ -31,8 +31,11 @@ class TaskItemViewHolder(
         binding.completeButton.setOnClickListener{
             clickListener.completeTaskItem(taskItem)
         }
-        binding.taskCellContainer.setOnClickListener{
+
+        //Edit tasks after holding down on them for 1 second
+        binding.root.setOnLongClickListener{
             clickListener.editTaskItem(taskItem)
+            true
         }
         //If a task is completed, change the taskCellContainer background to a light green color
         if (taskItem.isCompleted()){

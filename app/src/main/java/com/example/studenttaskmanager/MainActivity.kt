@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity(), TaskItemListener
         TODO() //Implement menu functionality for sorting tasks
     }
 
-
     override fun editTaskItem(taskItem: TaskItemModel)
     {
         NewTask(taskItem).show(supportFragmentManager,"newTaskTag")
