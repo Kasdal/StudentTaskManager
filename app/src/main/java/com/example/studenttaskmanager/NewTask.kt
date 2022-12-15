@@ -7,6 +7,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.studenttaskmanager.databinding.FragmentNewTaskBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -62,6 +63,25 @@ class NewTask(var taskItem: TaskItemModel?) : BottomSheetDialogFragment()
 
     }
 
+    //Similar function to the one above but with validation for time input not used in this project
+    //Just here for future reference if needed in the future and to prove i can do it :)
+//    private fun openTimePicker() {
+//        if (dueTime == null) {
+//            // Show an error message if dueTime is empty
+//            Toast.makeText(activity, "Please select a due time for the task", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//
+//        val listener = TimePickerDialog.OnTimeSetListener{ _, selectedHour, selectedMinute ->
+//            dueTime = LocalTime.of(selectedHour, selectedMinute)
+//            updateTimeButtonText()
+//        }
+//        val dialog = TimePickerDialog(activity, listener, dueTime!!.hour, dueTime!!.minute, true)
+//        dialog.setTitle("Task Due")
+//        dialog.show()
+//
+//    }
+
     private fun updateTimeButtonText() {
         binding.timePickerButton.text = String.format("%02d:%02d",dueTime!!.hour,dueTime!!.minute)
         //add alert dialog to confirm time
@@ -83,25 +103,29 @@ class NewTask(var taskItem: TaskItemModel?) : BottomSheetDialogFragment()
         return binding.root
     }
 
-    //TODO: Add validation
-    private fun saveAction()
-    {
+    private fun saveAction() {
         //New formated due time string using the formatter in TaskItemModel
         val dueTimeString = if(dueTime == null) null else TaskItemModel.timeFormatter.format(dueTime)
         val name = binding.name.text.toString()
         val desc = binding.desc.text.toString()
-        if(taskItem == null)
-        {
+
+        // Check if name and desc are not empty
+        if (name.isEmpty() || desc.isEmpty()) {
+            // Show an error message if name or desc are empty
+            Toast.makeText(activity, "Please enter a name and description for the task", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(taskItem == null) {
             val newTask = TaskItemModel(name,desc,dueTimeString,null)
             viewTaskModel.addTaskItem(newTask)
-        }
-        else
-        {
+        } else {
             taskItem!!.name = name
             taskItem!!.desc = desc
             taskItem!!.dueTimeString = dueTimeString
             viewTaskModel.updateTaskItem(taskItem!!)
         }
+
         binding.name.setText("")
         binding.desc.setText("")
         dismiss()
