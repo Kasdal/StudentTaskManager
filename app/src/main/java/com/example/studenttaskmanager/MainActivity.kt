@@ -68,7 +68,8 @@ class MainActivity : AppCompatActivity(), TaskItemListener
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.sortByName -> {
+
+            R.id.searchByName -> {
                 viewTaskModel.sortByName()
                 Toast.makeText(this, "Sorted by Name", Toast.LENGTH_SHORT).show()
         }

@@ -8,9 +8,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/sortByName"
+        android:id="@+id/searchByName"
         android:icon="?android:attr/actionModeFindDrawable"
-        android:title="Sort By Name"
+        android:title="Search By Name"
         app:showAsAction="ifRoom" />
 
 </menu>
