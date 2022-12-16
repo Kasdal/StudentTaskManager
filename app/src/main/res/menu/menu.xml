@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sortByDueTime"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="Sort By Date"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/searchByName"
+        android:icon="?android:attr/actionModeFindDrawable"
+        android:title="Search By Name"
+        app:showAsAction="ifRoom" />
+
+</menu>
